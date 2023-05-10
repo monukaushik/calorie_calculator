@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script type="text/javascript">
+      window.history.forward();
+      function noBack() {
+          window.history.forward();
+      }
+    </script>
+              
+  </head>
+  <body>
+    
+    <div>
+      <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Calorie Counter</a>
+          <button class="navbar-toggler" type="button"data-bs-toggle="collapse"data-bs-target="#navbarSupportedContent"aria-controls="navbarSupportedContent"aria-expanded="false"aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/logout/">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class='container-fluid'>
+          <div class='row'>
+            <div class='col-md-6'>
+              <form action='' method='POST' enctype="multipart/form-data" style='position:absolute; left:5%; top:20%; box-shadow:1px 1px 1px 3px gray; padding:10px;'>   
+                    <h3 style='text-align: center;'> Calculate Your Calorie </h3>
+                     {% csrf_token %} 
+                    <div class="mb-3">
+                      <label for="wight" class="form-label">Your Weight in Kg </label>
+                      <input type="number" class="form-control" name='weight' placeholder='Enter your weight'>
+                    </div>
+                    <div class="mb-3">
+                      <label for="height" class="form-label">Your Height in CM</label>
+                      <input type="number" class="form-control" name='height' placeholder='Enter your height'>
+                    </div>
+                    <div class="mb-3">
+                      <label for="age" class="form-label"> You Age</label>
+                      <input type="number" class="form-control" name='age' placeholder='Enter your age'>
+                    </div>  
+                    <div class="mb-3">
+                        <label for="cpassword" class="form-label">Select Gender </label>
+                        <select class="form-select"  name='gender' aria-label="Default select example">
+                            <option value="Male" selected>Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                          </select>
+                      </div>    
+                    <div style='display: flex; place-content: space-between;'>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <a href='/signin/' class="btn btn-primary"> Back </a >
+                    </div>
+                  </form>
+            </div>
+            <div class='col-md-6'>
+              <div class="next" style='position:absolute; top:40%;'>
+              <p style='font-size:30px;'> Total Calorie For a Day : {{total_calorie}}</p>
+              <p style='font-size:16px; text-align:center;'> <a href='/calorie_summary/' >Click hare to calculate your calorie...</a></p>
+            </div>
+         </div>
+      </div>  
+
+      <footer class='navbar-dark bg-dark w-100' style='position:fixed; bottom:0; font-size: 14px; color: white;'>
+        <p> Created By : Monu Kaushik  &nbsp; <a href="mailto : monukaushik51@gmail.com">monukaushik51@gmail.com</a></p>
+      </footer>
+     
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  </body>
+</html>

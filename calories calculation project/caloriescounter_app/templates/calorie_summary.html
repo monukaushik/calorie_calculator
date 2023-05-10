@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Calorie Summary Page</title>
+    <link
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+      <!-- Compiled and minified JavaScript -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+      <script type="text/javascript">
+        window.history.forward();
+        function noBack() {
+            window.history.forward();
+        }
+      </script>
+    
+  </head>
+  <body>
+    <div>
+      <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"> Hi {{user}}</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0 ms-auto">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/logout/">Logout</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ">
+              <!-- Add more links here if needed -->
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+   <div class="container-fluid">
+    <div class="row" style='margin-top:30px;'>
+      <div class="col-md-4" >
+        <form action='{% url 'calorie_summary' %}' method='POST' >   
+          {% csrf_token %} 
+            <p style='text-align:center; background-color:black; color:white; font-size:20px;'>Fill Details </p>
+              <div class="mb-3">
+                <label for="name"  class="form-label">Enter Name </label>
+                <input type="text" class="form-control" name='name' placeholder="Enter your name">
+              </div>
+              <div class="mb-3">
+                <label for="date" class="form-label" >Select Date </label>
+                <input type="date" class="form-control" name='date' placeholder="Select current date">
+              </div>
+              <div class="mb-3">
+                <label for="calorie" class="form-label">Enter Calorie </label>
+                <input type="number" class="form-control" name='calorie' placeholder="Enter total calorie">
+              </div>
+            <div class="mb-3">
+              <label for="staticEmail2" class="form-label" >Add Food</label>
+              <input type="text" class="form-control" name='food' id="inputPassword2" placeholder="add your food">
+            </div>
+            <div class="mb-3">
+              <button type="submit" class="btn btn-dark text-color-white w-100">Add</button>
+            </div>
+        </form>
+      </div>
+      <div class="col-md-4" >
+        <p style='text-align:center; background-color:black; color:white; font-size:20px;'>Summary </p>
+          <p style='font-size:20px;'> User Name : {{user}} </p>
+          <p style='font-size:20px;'> Total Calorie :  {{total_cal}}  </p> 
+          <p style='font-size:20px;'> Total Consume :  {{total_consume}}  </p>
+          <p style='font-size:20px;'> Total Balance :  {{balance}}  </p>
+      </div>
+      <div class="col-md-4" >  
+        <p style='text-align:center; background-color:black; color:white; font-size:20px;'>Graph </p>
+        <canvas id="myChart"> </canvas>
+      </div>
+    </div>
+          <div class='row'>
+            <div class="col-md-12">
+              <table class='table table-striped'>
+                <h4 style='text-align:center; background-color:black; color:white; font-size:20px;'> Consume Food Summary </h4>
+                     <tr>
+                         <th> Food Name </th>
+                         <th> Calorie</th>
+                         <th> Protein</th>
+                         <th> Fat    </th>
+                         <th> Carb.H </th>
+                         <th> Suger  </th>
+                     </tr>
+                     {% for i in data %}
+                     <tr>
+                      <td> {{i.food_item}}</td>
+                      <td> {{i.calories}} </td>
+                      <td> {{i.protein}}  </td>
+                      <td> {{i.fat}}      </td>
+                      <td> {{i.carbs}}    </td>
+                      <td> {{i.suger}}    </td>
+                     </tr>
+                     {% endfor %}
+              </table>
+          </div>
+        </div>
+      </div>
+
+      <footer class='navbar-dark bg-dark w-100' style='position:fixed; bottom:0; font-size: 14px; color: white;'>
+        <p> Created By : Monu Kaushik  &nbsp; <a href="mailto : monukaushik51@gmail.com">monukaushik51@gmail.com</a></p>
+      </footer>
+
+        <script>
+          var ctx = document.getElementById('myChart').getContext('2d');
+          var chart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                  labels: ['total_calorie','total_consume','Balance'],
+                  datasets: [{
+                      label: 'My Data',
+                      data: [{{ total_cal }},{{total_consume}},{{balance}}],
+                      backgroundColor: 'rgb(238, 130, 238)',
+                      borderColor: 'rgb(60, 60, 60)',
+                      borderWidth: 1
+                  }]
+              },
+              options: {}
+          });
+      </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
